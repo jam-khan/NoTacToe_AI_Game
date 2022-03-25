@@ -42,10 +42,14 @@ Repository for ENGG1340 team project.
   We will be using **Multi-dimensional Arrays** for storing the grid status of the game.  
 
 ### Requirement 3: Dynamic memory management
-
+  The variable storing the move will be storing a different input each round. The previous move will be cleared.
+  
 ### Requirement 4: File input/output (e.g., for loading/saving game status)
+  We will provide the option to save the game status which will output a file.
+  The status can be loaded by taking the file as an input.
 
 ### Requirement 5: Program codes in multiple files
+  We will split the functions into different files such as the main code/board initialisation/checking if there is a winner.
 
 
 ## Sample Input/Output Display:
