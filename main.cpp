@@ -234,28 +234,6 @@ void get_save()
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 int main() {
     int input;
     cout<<"Please select an option:\nNew Game [1]\nLoad Game[2]\n";
