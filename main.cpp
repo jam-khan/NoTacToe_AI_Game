@@ -56,7 +56,6 @@ bool validate_Input(string input){
         return false;
     }
 
-
     return true;
 
 }
