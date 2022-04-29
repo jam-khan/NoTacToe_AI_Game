@@ -7,6 +7,7 @@
 #include <cstdlib>
 #include <sstream>
 #include <algorithm>
+#include <ctime>
 
 using namespace std;
 
@@ -21,11 +22,179 @@ struct coordinates {
 };
 
 
+coordinates random_bot()
+{
+    srand(time(0));
+    map<char, vector<char>>::iterator itr;
+    char board;
+    int pos;
+    int map_size=tables.size();
+    int rand_board;
+    int rand_pos;
+    int board_count=-1;
+
+    //randomize board
+
+    rand_board=rand()%map_size;
+    rand_pos=rand()%9;
+
+    for(itr=tables.begin();itr!=tables.end();itr++)
+    {
+        board_count++;
+        if(board_count==rand_board)
+        {
+
+            board=itr->first;
+
+            vector<char> vect_temp = itr->second;
+            vector<char>::iterator itr2;
+
+            int board_count=0;
+            for(itr2=vect_temp.begin();itr2!=vect_temp.end();itr2++)
+            {
+                if (board_count==rand_pos)
+                {
+                    if (*itr2=='x')
+                    {
+                        rand_pos=rand()%9;
+                    }
+                    else
+                    {
+                        coordinates coordinate;
+                        coordinate.grid_name = board;
+                        coordinate.position = rand_pos;
+                        return coordinate;
+                    }
+
+                }
+                board_count++;
+
+            }
+        }
+    }
+
+}
+
+
+
+void save_game_state(int counter)
+{
+    ofstream game_file;
+    game_file.open("GameState.txt");
+
+    game_file<<counter-1;
+
+    map<char, vector<char>>::iterator itr;
+
+    for(itr=tables.begin();itr!=tables.end();itr++)
+    {
+        game_file<< itr->first<<endl;
+        vector<char> vect_temp = itr->second;
+        vector<char>::iterator itr2;
+
+        for(itr2=vect_temp.begin();itr2!=vect_temp.end();itr2++)
+        {
+            game_file<< *itr2<<endl;
+        }
+    }
+    game_file.close();
+    return;
+}
+
+
+void load_game_state(int &counter)
+{
+    ifstream game_file;
+    game_file.open("GameState.txt");
+
+    map<char, vector<char>>::iterator itr;
+
+    vector<char> vect_temp;
+    char input;
+    char board;
+
+    game_file>>counter;
+
+    while(game_file>>board)
+    {
+        for(int i=0;i<9;i++)
+        {
+            game_file>>input;
+
+            vect_temp.push_back(input);
+
+        }
+        tables[board]=vect_temp;
+        vect_temp.clear();
+    }
+
+
+
+    if(tables.empty())
+    {
+        vector<char> vect = {'0', '1', '2', '3', '4', '5', '6', '7', '8'};
+
+            int difficulty;
+            cout << "High: Enter 3\tMedium: Enter 2\tEasy: Enter 1\nDifficulty: ";
+            cin >> difficulty;
+            // validate difficulty
+            cout << endl;
+
+            for (int i = 0; i < 2 + difficulty; i++) {
+                tables[(char)('A' + i)] = vect;
+            }
+    }
+
+    game_file.close();
+    return;
+}
+
+
+bool get_save(int counter)
+{
+    string input;
+    cout<<"Would you like to exit the game?\n [yes/no]:";
+    cin>>input;
+    while(true)
+    {
+        if(input=="yes")
+        {
+
+            cout<<"Would you like to save the game status?\n [yes/no]:";
+            cin>>input;
+
+            while(true)
+            {
+                if(input=="yes")
+                {
+                    save_game_state(counter);
+                    exit(0);
+                }
+
+                else if(input=="no")
+                    exit(0);
+
+                cout<<"Would you like to save the game status?\n [yes/no]:";
+                cin>>input;
+
+            }
+        }
+        else if(input=="no")
+            return false;
+
+        cout<<"Would you like to save and exit the game status?\n [yes/no]:";
+        cin>>input;
+
+    }
+
+}
+
+
 bool validate_Input(string input){
 
     if (input.size() != 2)
         return false;
-        
+
 
     coordinates coordinate;
     coordinate.grid_name = input.at(0);
@@ -35,19 +204,19 @@ bool validate_Input(string input){
 
     bool correct_grid_name = false;
 
-    for (itr = tables.begin(); itr != tables.end(); itr++) 
+    for (itr = tables.begin(); itr != tables.end(); itr++)
         if ((*itr).first == coordinate.grid_name) {
-            if ((*itr).second[coordinate.position] == 'X') 
+            if ((*itr).second[coordinate.position] == 'X')
                 return false;
-            
+
             correct_grid_name = true;
         }
-    
+
 
     if (!correct_grid_name)
         return false;
 
-    if (coordinate.position < 0 || coordinate.position > 8) 
+    if (coordinate.position < 0 || coordinate.position > 8)
         return false;
 
 
@@ -60,10 +229,23 @@ coordinates take_player_input(int player_num) {
     cout << "Player " << player_num << ": ";
     cin >> input;
 
+    while(input=="!")
+    {
+        get_save(player_num);
+        cout << "Player " << player_num << ": ";
+        cin >> input;
+    }
+
     while (!validate_Input(input)){
         cout << "Wrong Input Enter Again" << endl;
         cout << "Player " << player_num << ": ";
         cin >> input;
+        while(input=="!")
+        {
+            get_save(player_num);
+            cout << "Player " << player_num << ": ";
+            cin >> input;
+        }
     }
 
     coordinates coordinate;
@@ -84,12 +266,12 @@ void print_grid(){
 
     cout << endl;
 
-    for(int i = 0; i < 3; i++) {    
+    for(int i = 0; i < 3; i++) {
         for (itr = tables.begin(); itr != tables.end(); itr++){
             vector<char> vect_temp = (*itr).second;
-            for (int j = 0; j < 3; j++) 
+            for (int j = 0; j < 3; j++)
                 cout << vect_temp[i * 3 + j] << " ";
-            
+
             cout << "  ";
         }
         cout << endl;
@@ -99,7 +281,7 @@ void print_grid(){
 
 void refresh_grid(coordinates coordinate) {
 
-    tables[coordinate.grid_name][coordinate.position] = 'X'; 
+    tables[coordinate.grid_name][coordinate.position] = 'X';
 
 }
 
@@ -108,7 +290,7 @@ void cross_check() {
 
     map<char, vector<char>>::iterator itr;
 
-    for (itr = tables.begin(); itr != tables.end(); itr++)         
+    for (itr = tables.begin(); itr != tables.end(); itr++)
         for (int i = 0; i < 3; i++) {
             if ((*itr).second[3 * i] == 'X' && (*itr).second[3 * i + 1] == 'X' && (*itr).second[3 * i + 2] == 'X') {
                 tables.erase((*itr).first);
@@ -134,7 +316,7 @@ void cross_check() {
 }
 
 void initialize_ai_bot() {
-    
+
     ifstream fin;
     fin.open("q_values.txt");
 
@@ -158,7 +340,7 @@ void initialize_ai_bot() {
             }
         }
     }
-    
+
     fin.close();
 }
 
@@ -170,7 +352,7 @@ vector<char> get_sorted(vector<char> grid) {
 
     int counter = 0;
 
-    
+
     for (int i = 0; i < 9; i++) {
         if (grid[i] == 'X'){
             sorted_grid.push_back('X');
@@ -203,7 +385,7 @@ vector<char> get_reflection(vector<char> grid, char axis) {
 
     vector<char> reflected_grid;
 
-    if (axis == 'y') {    
+    if (axis == 'y') {
         reflected_grid = {grid[2], grid[1], grid[0], grid[5], grid[4], grid[3], grid[8], grid[7], grid[6]};
     } else if (axis == 'x') {
         reflected_grid = {grid[6], grid[7], grid[8], grid[3], grid[4], grid[5], grid[0], grid[1], grid[2]};
@@ -217,15 +399,15 @@ vector<char> get_reflection(vector<char> grid, char axis) {
 
 string get_q_value(vector<char> current_table) {
 
-    map<string, vector<vector<char>>>::iterator itr;   
+    map<string, vector<vector<char>>>::iterator itr;
     vector<char> temp_grid;
 
     for(itr = monoid_values.begin(); itr != monoid_values.end(); itr++) {
-        // cout << (*itr).first << endl;    
+        // cout << (*itr).first << endl;
         for (int i = 0; i < monoid_values[(*itr).first].size(); i++){
             temp_grid = (*itr).second[i];
-            if (current_table == temp_grid 
-                || current_table == get_reflection(temp_grid, 'x') 
+            if (current_table == temp_grid
+                || current_table == get_reflection(temp_grid, 'x')
                 || current_table == get_reflection(temp_grid, 'y')
                 || current_table == get_rotation(temp_grid, 90)
                 || current_table == get_rotation(temp_grid, 180)
@@ -247,7 +429,7 @@ string simplify_monoid(string monoid) {
 
     bool no_change = true;
 
-    string simplified_monoid = ""; 
+    string simplified_monoid = "";
 
     int count_a = count(monoid.begin(), monoid.end(), 'a');
     int count_b = count(monoid.begin(), monoid.end(), 'b');
@@ -295,7 +477,7 @@ string simplify_monoid(string monoid) {
     if(no_change) {
         return monoid;
     }else {
-        
+
         for (int i = 0; i < count_a; i++)
             simplified_monoid = simplified_monoid + "a";
 
@@ -309,8 +491,8 @@ string simplify_monoid(string monoid) {
             simplified_monoid = simplified_monoid + "d";
 
         // simplified_monoid = string('a', count_a) + string('b', count_b) + string('c', count_c) + string('d', count_d);
-        return simplify_monoid(simplified_monoid); 
-        
+        return simplify_monoid(simplified_monoid);
+
     }
 
 }
@@ -322,9 +504,9 @@ string get_monoid(map<char, vector<char>> test_tables) {
 
     map<char, vector<char>>::iterator itr;
 
-    for(itr = test_tables.begin(); itr != test_tables.end(); itr++) 
+    for(itr = test_tables.begin(); itr != test_tables.end(); itr++)
         monoid += get_q_value((*itr).second);
-    
+
 
     return simplify_monoid(monoid);
 }
@@ -333,14 +515,14 @@ bool check_ai_move(map<char, vector<char>> test_tables) {
 
     string monoid = get_monoid(test_tables);
 
-    if (monoid == "a" 
+    if (monoid == "a"
             || monoid == "bc"
             || monoid == "cb"
             || monoid == "bb"
             || monoid == "cc")
             return true;
 
-    return false; 
+    return false;
 
 }
 
@@ -389,40 +571,49 @@ int main() {
 
     initialize_ai_bot();
 
-    vector<char> vect = {'0', '1', '2', '3', '4', '5', '6', '7', '8'};
+    string input;
+    int player_counter = 0;
 
+    cout<<"Please select an option:\nNew Game [1]\nLoad Game[2]\n";
+    cin>>input;
+    while(true)
+    {
+        if(input=="1")
+        {
+            vector<char> vect = {'0', '1', '2', '3', '4', '5', '6', '7', '8'};
 
-    int difficulty;
-    cout << "High: Enter 3\tMedium: Enter 2\tEasy: Enter 1\nDifficulty: ";
-    cin >> difficulty;
-    cout << endl;
+            int difficulty;
+            cout << "High: Enter 3\tMedium: Enter 2\tEasy: Enter 1\nDifficulty: ";
+            cin >> difficulty;
+            // validate difficulty
+            cout << endl;
 
-    for (int i = 0; i < 2 + difficulty; i++) {
-        tables[(char)('A' + i)] = vect;
+            for (int i = 0; i < 2 + difficulty; i++) {
+                tables[(char)('A' + i)] = vect;
+            }
+                break;
+        }
+        else if (input=="2")
+        {
+            load_game_state(player_counter);
+            break;
+        }
+        cout << "Please select an option:\n\tNew Game [1]\n\tLoad Game[2]\n";
+        cin >> input;
     }
 
 
     print_grid();
 
-    coordinates input1 = take_player_input(1);
-    
-    int player_counter = 1;
+    coordinates input1 = take_player_input(player_counter % 2 + 1);
+
 
     while(true) {
+        player_counter++;
         refresh_grid(input1);
 
         get_ai_move();
-
-        // map<char, vector<char>>::iterator itr;
-
-        // for (itr = tables.begin(); itr != tables.end(); itr++) {
-        //     cout << (*itr).first << ": ";
-        //     get_q_value((*itr).second);
-        //     cout << "\t";
-        // }
-
         cout << endl;
-
 
         cross_check();
 
@@ -430,22 +621,21 @@ int main() {
             break;
 
         print_grid();
-        
+
         if (player_counter % 2 + 1 == 2) {
-            
+
             input1 = get_ai_move();
-            
+
+
             cout << "Player 2 (AI): " << input1.grid_name << input1.position << endl;
-            player_counter++;
 
         }else {
             input1 = take_player_input(player_counter % 2 + 1);
-            player_counter++; 
         }
 
     }
     // was checking refresh grid
-    
+
     cout << "Player " << (player_counter % 2 + 1) << " wins!";
 
 }
@@ -457,3 +647,6 @@ int main() {
 // refreshGrid with cross: done
 // remove grid once cross found: done
 // AI bot done
+
+
+// Random bot waiting to be added to main function
