@@ -1,0 +1,48 @@
+c 1
+0 1 2 3 4 5 6 7 8
+cc 1
+0 1 2 3 X 5 6 7 8
+ad 1
+X X 2 3 4 5 6 7 8
+ab 4
+X X 2 3 X 5 6 7 8
+X 1 X 3 4 5 X 7 8
+0 X 2 X X 5 6 7 8
+X X 2 3 4 X 6 7 X
+a 17
+X 1 2 3 4 5 6 7 X
+0 X 2 X 4 5 6 7 8
+0 X 2 3 4 5 6 X 8
+X X 2 3 4 5 X 7 8
+X 1 X 3 X 5 6 7 8
+X 1 X 3 4 5 6 X 8
+X 1 2 3 X X 6 7 8
+X X 2 X X 5 6 7 8
+X X 2 X 4 X 6 7 8
+X X 2 X 4 5 6 7 X
+X X 2 3 4 5 6 X X
+X 1 X 3 4 5 X 7 X
+0 X 2 X 4 X 6 X 8
+X X 2 3 X X X 7 8
+X X 2 3 4 X X X 8
+X X 2 3 4 X X 7 X
+X X 2 X 4 X 6 X X
+b 14
+X 1 X 3 4 5 6 7 8
+X 1 2 3 X 5 6 7 8
+X 1 2 3 4 X 6 7 8
+0 X 2 3 X 5 6 7 8
+X X 2 X 4 5 6 7 8
+0 X 2 X 4 X 6 7 8
+X X 2 3 X X 6 7 8
+X X 2 3 X 5 X 7 8
+X X 2 3 4 X X 7 8
+X X 2 3 4 5 X X 8
+X X 2 3 4 5 X 7 X
+X 1 X 3 X 5 6 X 8
+X 1 2 3 X X 6 X 8
+X X 2 X 4 X 6 7 X
+d 3
+X X 2 3 4 X 6 7 8
+X X 2 3 4 5 6 X 8
+X X 2 3 4 5 6 7 X
