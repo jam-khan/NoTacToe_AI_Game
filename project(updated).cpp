@@ -23,6 +23,121 @@ struct coordinates {
 };
 
 
+void save_game_state(int counter)
+{
+    ofstream game_file;
+    game_file.open("GameState.txt");
+
+    game_file<<counter-1;
+
+    map<char, vector<char>>::iterator itr;
+
+    for(itr=tables.begin();itr!=tables.end();itr++)
+    {
+        game_file<< itr->first<<endl;
+        vector<char> vect_temp = itr->second;
+        vector<char>::iterator itr2;
+
+        for(itr2=vect_temp.begin();itr2!=vect_temp.end();itr2++)
+        {
+            game_file<< *itr2<<endl;
+        }
+    }
+    game_file.close();
+    return;
+}
+
+
+void load_game_state(int &counter)
+{
+    ifstream game_file;
+    game_file.open("GameState.txt");
+
+    map<char, vector<char>>::iterator itr;
+
+    vector<char> vect_temp;
+    char input;
+    char board;
+
+    game_file>>counter;
+
+    while(game_file>>board)
+    {
+        for(int i=0;i<9;i++)
+        {
+            game_file>>input;
+
+            vect_temp.push_back(input);
+
+        }
+        tables[board]=vect_temp;
+        vect_temp.clear();
+    }
+
+
+
+    if(tables.empty())
+    {
+        vector<char> vect = {'0', '1', '2', '3', '4', '5', '6', '7', '8'};
+
+            int difficulty;
+            cout << "High: Enter 3\tMedium: Enter 2\tEasy: Enter 1\nDifficulty: ";
+            cin >> difficulty;
+            // validate difficulty
+            cout << endl;
+
+            for (int i = 0; i < 2 + difficulty; i++) {
+                tables[(char)('A' + i)] = vect;
+            }
+    }
+
+    game_file.close();
+    return;
+}
+
+
+bool get_save(int counter)
+{
+    string input;
+    cout<<"Would you like to exit the game?\n [yes/no]:";
+    cin>>input;
+    while(true)
+    {
+        if(input=="yes")
+        {
+
+            cout<<"Would you like to save the game status?\n [yes/no]:";
+            cin>>input;
+
+            while(true)
+            {
+                if(input=="yes")
+                {
+                    save_game_state(counter);
+                    exit(0);
+                }
+
+                else if(input=="no")
+                    exit(0);
+
+                cout<<"Would you like to save the game status?\n [yes/no]:";
+                cin>>input;
+
+            }
+        }
+        else if(input=="no")
+            return false;
+
+        cout<<"Would you like to save and exit the game status?\n [yes/no]:";
+        cin>>input;
+
+    }
+
+}
+
+
+
+
 bool validate_Input(string input){
 
     if (input.size() != 2) {
@@ -56,7 +171,6 @@ bool validate_Input(string input){
         return false;
     }
 
-
     return true;
 
 }
@@ -66,6 +180,14 @@ coordinates take_player_input(int player_num) {
     string input;
     cout << "Player " << player_num << ": ";
     cin >> input;
+
+    while(input=="!")
+    {
+        get_save(player_num);
+        cout << "Player " << player_num << ": ";
+        cin >> input;
+
+    }
 
     while (!validate_Input(input)){
         cout << "Wrong Input Enter Again" << endl;
@@ -157,84 +279,11 @@ void cross_check() {
 }
 
 
-
-void save_game_state()
-{
-    ofstream game_file;
-    game_file.open("GameState.txt");
-
-    map<char, vector<char>>::iterator itr;
-
-    for(itr=tables.begin();itr!=tables.end();itr++)
-    {
-        game_file<< itr->first<<endl;
-        vector<char> vect_temp = itr->second;
-        vector<char>::iterator itr2;
-
-        for(itr2=vect_temp.begin();itr2!=vect_temp.end();itr2++)
-        {
-            game_file<< *itr2<<endl;
-        }
-    }
-    game_file.close();
-    return;
-}
-
-
-void load_game_state()
-{
-    ifstream game_file;
-    game_file.open("GameState.txt");
-
-    map<char, vector<char>>::iterator itr;
-
-    vector<char> vect_temp;
-    char input;
-    char board;
-
-    while(game_file>>board)
-    {
-        for(int i=0;i<9;i++)
-        {
-            game_file>>input;
-            cout<<input<<endl;
-
-            vect_temp.push_back(input);
-
-        }
-        cout<<"board: "<<board<<endl;
-        tables[board]=vect_temp;
-        vect_temp.clear();
-    }
-    game_file.close();
-    return;
-}
-
-
-void get_save()
-{
-    string input;
-    cout<<"Would you like to save and exit the game status?\n [yes/no]:";
-    cin>>input;
-    while(true)
-    {
-        if(input=="yes")
-            {
-            save_game_state();
-            exit(0);
-            break;
-            }
-        else if(input=="no")
-            break;
-
-        cout<<"Would you like to save and exit the game status?\n [yes/no]:";
-        cin>>input;
-
-    }
-}
-
 int main() {
+
     int input;
+    int player_counter = 0;
+
     cout<<"Please select an option:\nNew Game [1]\nLoad Game[2]\n";
     cin>>input;
     while(true)
@@ -262,7 +311,7 @@ int main() {
         }
         else if (input==2)
         {
-            load_game_state();
+            load_game_state(player_counter);
             break;
         }
         cout<<"Please select an option:\n\tNew Game [1]\n\tLoad Game\n";
@@ -273,12 +322,11 @@ int main() {
 
     print_grid(tables);
 
-    coordinates input1 = take_player_input(1);
+    coordinates input1 = take_player_input(player_counter % 2 + 1);
 
-
-    int player_counter = 0;
 
     while(true) {
+        player_counter++;
         refresh_grid(input1);
         cross_check();
 
@@ -287,10 +335,8 @@ int main() {
 
         print_grid(tables);
 
-        get_save();
 
         input1 = take_player_input(player_counter % 2 + 1);
-        player_counter++;
 
     }
     // was checking refresh grid
