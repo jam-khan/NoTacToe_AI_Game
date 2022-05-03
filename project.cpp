@@ -591,18 +591,31 @@ int main() {
 
     int difficulty;
     string input;
+    string mode;
 
     int player_counter = 0;
 
-    cout<<"Please select an option:\nNew Game [1]\nLoad Game[2]\n";
+    cout<<"Please select a game mode:\nSingleplayer [1]\nMultiplayer [2]\n";
+    cin>>mode;
+    while(true)
+    {
+        if(mode=="1" || mode=="2")
+            break;
+        cout<<"Please select a game mode:\nSingleplayer [1]\nMultiplayer [2]\n";
+        cin>>mode;
+    }
+
+    cout<<"Please select an option:\nNew Game [1]\nLoad Game [2]\n";
     cin>>input;
     while(true)
     {
         if(input=="1")
         {
             vector<char> vect = {'0', '1', '2', '3', '4', '5', '6', '7', '8'};
-
-            cout << "High: Enter 3\tMedium: Enter 2\tEasy: Enter 1\nDifficulty: ";
+            if(mode=="1")
+                cout << "Number of Boards:\n[3]: Enter 1\t[4]: Enter 2\t[5]: Enter 3\nDifficulty: ";
+            else
+                cout << "High: Enter 3\tMedium: Enter 2\tEasy: Enter 1\nDifficulty: ";
             cin >> difficulty;
             // validate difficulty
             cout << endl;
@@ -617,7 +630,7 @@ int main() {
             load_game_state(player_counter);
             break;
         }
-        cout << "Please select an option:\n\tNew Game [1]\n\tLoad Game[2]\n";
+        cout << "Please select an option:\n\tNew Game [1]\n\tLoad Game [2]\n";
         cin >> input;
     }
 
@@ -641,7 +654,7 @@ int main() {
 
         print_grid();
 
-        if (player_counter % 2 + 1 == 2) {
+        if (player_counter % 2 + 1 == 2 && mode == "2") {
 
             input1 = get_bot_move(difficulty);
 
@@ -666,4 +679,6 @@ int main() {
 // refreshGrid with cross: done
 // remove grid once cross found: done
 // AI bot done
-// Random bot added to main function
+
+
+// Random bot waiting to be added to main function
