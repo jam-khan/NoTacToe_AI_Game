@@ -22,7 +22,7 @@ struct coordinates {
 };
 
 
-coordinates random_bot()
+coordinates get_random_move()
 {
     srand(time(0));
     map<char, vector<char>>::iterator itr;
@@ -565,13 +565,33 @@ coordinates get_ai_move() {
 
 }
 
+coordinates get_bot_move(int mode)
+{
+    if(mode==1)
+    {
+        return get_random_move();
+    }
+    else if(mode==2)
+    {
+        if (rand()%2)
+        get_random_move();
+        else
+        get_ai_move();
+    }
+    else if(mode==3)
+    {
+        return get_ai_move();
+    }
+}
 
 int main() {
 
 
     initialize_ai_bot();
 
+    int difficulty;
     string input;
+
     int player_counter = 0;
 
     cout<<"Please select an option:\nNew Game [1]\nLoad Game[2]\n";
@@ -582,7 +602,6 @@ int main() {
         {
             vector<char> vect = {'0', '1', '2', '3', '4', '5', '6', '7', '8'};
 
-            int difficulty;
             cout << "High: Enter 3\tMedium: Enter 2\tEasy: Enter 1\nDifficulty: ";
             cin >> difficulty;
             // validate difficulty
@@ -624,7 +643,7 @@ int main() {
 
         if (player_counter % 2 + 1 == 2) {
 
-            input1 = get_ai_move();
+            input1 = get_bot_move(difficulty);
 
 
             cout << "Player 2 (AI): " << input1.grid_name << input1.position << endl;
@@ -647,6 +666,4 @@ int main() {
 // refreshGrid with cross: done
 // remove grid once cross found: done
 // AI bot done
-
-
-// Random bot waiting to be added to main function
+// Random bot added to main function
