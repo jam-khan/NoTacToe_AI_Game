@@ -21,7 +21,8 @@ struct coordinates {
     int position;
 };
 
-
+//checks if player would like to go first or second
+//input for function is pass by reference of bot being player 1 or 2
 int get_player_pos(int &bot)
 {
     string input;
@@ -44,6 +45,7 @@ int get_player_pos(int &bot)
     }
 }
 
+// this function returns a random move for the bot
 coordinates get_random_move()
 {
     srand(time(0));
@@ -98,7 +100,9 @@ coordinates get_random_move()
 }
 
 
-
+// this function saves the game state in a text file
+// this includes the board , player counter, mode of the game, difficulty of the game, and if the bot is player 1 or 2
+// singleplayer and multiplayer is saved in different text files
 void save_game_state(int counter,string mode,int difficulty,int bot_pos)
 {
     ofstream game_file;
@@ -131,7 +135,8 @@ void save_game_state(int counter,string mode,int difficulty,int bot_pos)
     return;
 }
 
-
+// this function loads the game state from a text file
+// this includes the board , player counter, mode of the game, difficulty of the game, and if the bot is player 1 or 2
 void load_game_state(int &counter,string mode,int &difficulty,int &bot_pos)
 {
     ifstream game_file;
@@ -167,7 +172,7 @@ void load_game_state(int &counter,string mode,int &difficulty,int &bot_pos)
         vect_temp.clear();
     }
 
-
+    // checks if the grids are empty
     if(tables.empty())
     {
         cout<<"No Previous Saves\n\n";
@@ -211,7 +216,8 @@ void load_game_state(int &counter,string mode,int &difficulty,int &bot_pos)
     return;
 }
 
-
+// function to ask player if they want to quit the game and to save the game
+// it also asks for the board , player counter, mode of the game, difficulty of the game, and if the bot is player 1 or 2
 bool get_save(int counter,string mode,int difficulty,int bot_pos)
 {
     string input;
@@ -634,26 +640,28 @@ coordinates get_ai_move() {
 
 }
 
-coordinates get_bot_move(int mode)
+// gives the appropriate ai move according to the difficulty level
+// it takes diffficulty level as an input
+coordinates get_bot_move(int diff)
 {
-    if(mode==1)
+    if(diff==1)
     {
         return get_random_move();
     }
-    else if(mode==2)
+    else if(diff==2)
     {
         if (rand()%2)
             return get_random_move();
         else
             return get_ai_move();
     }
-    else if(mode==3)
+    else if(diff==3)
     {
         return get_ai_move();
     }
 }
 
-
+//print welcome text
 void welcome_text()
 {
     ifstream game_file;
