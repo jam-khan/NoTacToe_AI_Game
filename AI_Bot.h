@@ -29,6 +29,6 @@ string simplify_monoid(string monoid);
 string get_monoid(map<char, vector<char>> test_tables,  map<string, vector<vector<char>>> monoid_values);
 bool check_ai_move(map<char, vector<char>> test_tables, map<string, vector<vector<char>>> monoid_values);
 void get_ai_move(coordinates &move, map<char, vector<char>> tables, map<string, vector<vector<char>>> monoid_values);
-
+coordinates get_random_move(map<char, vector<char>> tables);
 
 #endif
