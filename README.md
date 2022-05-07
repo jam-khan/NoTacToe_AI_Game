@@ -25,9 +25,15 @@ Repository for ENGG1340 team project.
     Following are the rules of the game:
     1. Every player will input a location on one of the grids where 'X' will be entered.
     2. When a line (vertical, horizontal or diagonal) is formed by 'X' in a grid then that grid will be removed from the game.
-    3. Player which makes the last input which leads to the formation of a line and last grid removed will **LOSE**.
+    3. Player which makes the last input which leads to the formation of a line and the last grid removed will **LOSE**.
     4. Player which doesn't makes the last input will **WIN**.
     
+    Sample Move: A4
+    Meaning: X will be marked on the 4th position of the grid A
+
+
+## Installation and Running the Game:
+
 
 ## Implementation of Requirements:
 ### Requirement 1: Generation of random game sets or events
@@ -39,57 +45,93 @@ Repository for ENGG1340 team project.
   Difficulty level - Extremely Hard: All moves will be done using algorithm. It will be impossible for Player to win the game if choses to go second.  
   <br />
 ### Requirement 2: Data structures for storing game status
-  We will be using vectors and maps for storing the grid status of the game.  
+  We have used Map and Vectors from Standard Template Library (STL) to implement Data Structures for storing game status. Maps with string as keys and vectors as the items is used to store the Notakto grids used in this game. We have used Struct as a user-defined data type for coordinates inputed by the user.
 
 ### Requirement 3: Dynamic memory management
-  Once a grid (stored in vector) is no longer in play, it is removed.
+  We have the Notakto Grids stored inside Maps with strings as key and vectors (which store the single notakto grids). These grids are initialized according to the input from the user and then, once a cross-line of 3 X's is formed, just like in TikTakTo, that grid or key of our map data structure is erased and therefore, memory is automatatically released.
   
 ### Requirement 4: File input/output (e.g., for loading/saving game status)
-  We will provide the option to save the game status which will output a file.
-  The status can be loaded by taking the file as an input.
+  1. File q_values.txt stores the needed data values for our AI bot to work. These values are read when the program is started and stored inside a map data structure.
+  2. User can save the game status in a file and then, user has the option to load the game from the where they left. When users asks to save the game, a file is created and game status is stored inside it. On Next game, user can choose to load their old game and continue from where they left. If there is a saved file then that game will be loaded otherwise program will output that there is no game saved.
+  3. Welcome and Game ending messages are stored in files. These are read
 
 ### Requirement 5: Program codes in multiple files
-  We will split the functions into different files such as the main code/board initialisation/checking if there is a winner.
+  We have divided our code into following files:
+  1. main.cpp
+  2. AI_Bot.cpp
+  3. Grid_Functions.cpp
+  4. FileIO.cpp
+  
+  We have used header files to break the code into multiple files.
+
+### Requirement 6 & 7:
+  We have followed same code style across the project. We have made sure that our code remains efficient and readable by adding proper indentations, comments and 
+  meaningful variable names. We have added extensive comments for complex functions, especially those of AI_Bot.cpp
 
 
 ## Sample Input/Output Display:
-A more accurate sample can be found in the sample input/output folder
 
+We have added 3 sample input output files inside the project. However, please note that our output or input may not remain consistent since we have used random functionality to generate some moves in our code. Therefore, output may not be the same for same input.
 
 <pre>
-A      B      C  
-X 1 X  0 X 2  0 X 2  
-X X 5  3 4 5  3 4 5  
-6 X 8  6 7 8  6 7 8  
-Player 2: B4  
-A      B      C  
-X 1 X  0 X 2  0 X 2  
-X X 5  3 X 5  3 4 5  
-6 X 8  6 7 8  6 7 8  
-Player 1: B7  
-A      C  
-X 1 X  0 X 2  
-X X 5  3 4 5  
-6 X 8  6 7 8  
-Player 2: C0  
-A      C  
-X 1 X  X X 2  
-X X 5  3 4 5  
-6 X 8  6 7 8  
-Player 1: C2  
-A  
-X 1 X  
-X X 5  
-6 X 8  
-Player 2: A6  
-Player 1 wins game  
+             _        _    _        
+            | |      | |  | |
+ _ __   ___ | |_ __ _| | _| |_ ___
+| '_ \ / _ \| __/ _` | |/ / __/ _ \
+| | | | (_) | || (_| |   <| || (_) |
+|_| |_|\___/ \__\__,_|_|\_\\__\___/
 
+===============================================
+Please select a game mode:
+Singleplayer [1]
+Multiplayer  [2]
+mode: 1
+
+Please select an option:
+New Game  [1]
+Load Game [2]
+option: 2
+
+... Loading File ...
+Enter '!' whenever you want to quit the game.
+
+A       B
+X X 2   X 1 2
+X 4 5   3 4 X   
+6 7 X   6 7 X
+Player 1: B1
+
+
+A       B
+X X 2   X X 2
+X 4 5   3 4 X
+6 7 X   6 7 X
+Player 2(AI): B2
+
+A
+X X 2
+X 4 5
+6 7 X
+Player 1: A7
+
+
+A
+X X 2
+X 4 5
+6 X X   
+Player 2(AI): A5
+
+A
+X X 2
+X 4 X
+6 X X
+Player 1: A6
+
+
+Player 2 wins!
+  _____                 ____
+ / ___/__ ___ _  ___   / __ \_  _____ ____
+/ (_ / _ `/  ' \/ -_) / /_/ / |/ / -_) __/
+\___/\_,_/_/_/_/\__/  \____/|___/\__/_/
 </pre>
-<br />
-
-
-## Instructions for Compilation
-<pre>
-A makefile has been included 
-Please type "make Notakto" to compile the game.
 <br />
