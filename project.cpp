@@ -13,10 +13,8 @@
 
 using namespace std;
 
-
 map<char, vector<char>> tables;
 map<string, vector<vector<char>>> monoid_values;
-
 
 // struct coordinates {
 //     char grid_name;
@@ -25,115 +23,57 @@ map<string, vector<vector<char>>> monoid_values;
 
 //checks if player would like to go first or second
 //input for function is pass by reference of bot being player 1 or 2
-int get_player_pos(int &bot)
+int get_player_pos(int& bot)
 {
     string input;
-    cout<<"Would you like to go first?\n[yes/no]: ";
-    cin>>input;
-    while(true)
+    cout << "Would you like to go first?\n[yes/no]: ";
+    cin >> input;
+    while (true)
     {
-        if(input=="yes")
+        if (input == "yes")
         {
-            bot=2;
+            bot = 2;
             return 0;
         }
-        else if(input=="no")
+        else if (input == "no")
         {
-            bot=1;
+            bot = 1;
             return 1;
         }
-        cout<<"Would you like to go first?\n[yes/no]: ";
-        cin>>input;
+        cout << "Would you like to go first?\n[yes/no]: ";
+        cin >> input;
     }
 }
-
-// this function returns a random move for the bot
-coordinates get_random_move()
-{
-    //cout<<"randomizing\n";
-    srand(time(0));
-    map<char, vector<char>>::iterator itr;
-    char board;
-    int pos;
-    int map_size=tables.size();
-    int rand_board;
-    int rand_pos;
-
-    //randomize board
-
-    rand_board=rand()%map_size;
-    rand_pos=rand()%9;
-
-    while(true)
-    {
-        int board_count=-1;
-        for(itr=tables.begin();itr!=tables.end();itr++)
-        {
-            board_count++;
-            if(board_count==rand_board)
-            {
-
-                board=itr->first;
-
-                vector<char> vect_temp = itr->second;
-                vector<char>::iterator itr2;
-
-                int board_pos=0;
-                for(itr2=vect_temp.begin();itr2!=vect_temp.end();itr2++)
-                {
-                    if (board_pos==rand_pos)
-                    {
-                        if (*itr2=='X')
-                        {
-                            rand_pos=rand()%9;
-                        }
-                        else
-                        {
-                            coordinates coordinate;
-                            coordinate.grid_name = board;
-                            coordinate.position = rand_pos;
-                            return coordinate;
-                        }
-
-                    }
-                    board_pos++;
-
-                }
-            }
-        }
-    }
-}
-
 
 // this function saves the game state in a text file
 // this includes the board , player counter, mode of the game, difficulty of the game, and if the bot is player 1 or 2
 // singleplayer and multiplayer is saved in different text files
-void save_game_state(int counter,string mode,int difficulty,int bot_pos)
+void save_game_state(int counter, string mode, int difficulty, int bot_pos)
 {
     ofstream game_file;
-    if(mode=="1")
+    if (mode == "1")
         game_file.open("GameStateSingle.txt");
     else
         game_file.open("GameStateMulti.txt");
 
-    game_file<<counter-1;
-    game_file<<endl;
-    game_file<<difficulty;
-    game_file<<endl;
-    game_file<<bot_pos;
-    game_file<<endl;
+    game_file << counter - 1;
+    game_file << endl;
+    game_file << difficulty;
+    game_file << endl;
+    game_file << bot_pos;
+    game_file << endl;
 
     map<char, vector<char>>::iterator itr;
 
-    for(itr=tables.begin();itr!=tables.end();itr++)
+    for (itr = tables.begin();itr != tables.end();itr++)
     {
-        game_file<< itr->first<<endl;
+        game_file << itr->first << endl;
         vector<char> vect_temp = itr->second;
         vector<char>::iterator itr2;
 
-        for(itr2=vect_temp.begin();itr2!=vect_temp.end();itr2++)
+        for (itr2 = vect_temp.begin();itr2 != vect_temp.end();itr2++)
         {
-            game_file<< *itr2<<endl;
+            game_file << *itr2 << endl;
         }
     }
     game_file.close();
@@ -142,13 +82,13 @@ void save_game_state(int counter,string mode,int difficulty,int bot_pos)
 
 // this function loads the game state from a text file
 // this includes the board , player counter, mode of the game, difficulty of the game, and if the bot is player 1 or 2
-void load_game_state(int &counter,string mode,int &difficulty,int &bot_pos)
+void load_game_state(int& counter, string mode, int& difficulty, int& bot_pos)
 {
     ifstream game_file;
 
-    cout<<"... Loading File ...\n";
+    cout << "... Loading File ...\n";
 
-    if(mode=="1")
+    if (mode == "1")
         game_file.open("GameStateSingle.txt");
     else
         game_file.open("GameStateMulti.txt");
@@ -160,62 +100,62 @@ void load_game_state(int &counter,string mode,int &difficulty,int &bot_pos)
     char input;
     char board;
 
-    game_file>>counter;
-    game_file>>difficulty;
-    game_file>>bot_pos;
+    game_file >> counter;
+    game_file >> difficulty;
+    game_file >> bot_pos;
 
-    while(game_file>>board)
+    while (game_file >> board)
     {
-        for(int i=0;i<9;i++)
+        for (int i = 0;i < 9;i++)
         {
-            game_file>>input;
+            game_file >> input;
 
             vect_temp.push_back(input);
 
         }
-        tables[board]=vect_temp;
+        tables[board] = vect_temp;
         vect_temp.clear();
     }
 
     // checks if the grids are empty
-    if(tables.empty())
+    if (tables.empty())
     {
-        cout<<"No Previous Saves\n\n";
-        cout<<"Starting New Game ...\n\n";
+        cout << "No Previous Saves\n\n";
+        cout << "Starting New Game ...\n\n";
 
-        vector<char> vect = {'0', '1', '2', '3', '4', '5', '6', '7', '8'};
+        vector<char> vect = { '0', '1', '2', '3', '4', '5', '6', '7', '8' };
 
-            string diff;
+        string diff;
 
-            if(mode=="2")
-                cout<<"Please select number of boards:\n[3]: Enter 1\t[4]: Enter 2\t[5]: Enter 3\nNumber of boards: ";
+        if (mode == "2")
+            cout << "Please select number of boards:\n[3]: Enter 1\t[4]: Enter 2\t[5]: Enter 3\nNumber of boards: ";
+        else
+            cout << "Please select difficulty level\nHigh: Enter 3\tMedium: Enter 2\tEasy: Enter 1\nDifficulty: ";
+        cin >> diff;
+        cout << "\n";
+        // validate difficulty
+
+        while (true)
+        {
+            if (diff == "1" || diff == "2" || diff == "3")
+                break;
+
+            if (mode == "2")
+                cout << "Please select number of boards:\n[3]: Enter 1\t[4]: Enter 2\t[5]: Enter 3\nNumber of boards: ";
             else
-                cout<< "Please select difficulty level\nHigh: Enter 3\tMedium: Enter 2\tEasy: Enter 1\nDifficulty: ";
+                cout << "Please select difficulty level\nHigh: Enter 3\tMedium: Enter 2\tEasy: Enter 1\nDifficulty: ";
             cin >> diff;
-            cout<<"\n";
-            // validate difficulty
+        }
+        difficulty = stoi(diff);
 
-            while(true)
-            {
-                if(diff=="1" || diff=="2" || diff=="3")
-                    break;
+        if (mode == "1")
+            get_player_pos(bot_pos);
 
-                if(mode=="2")
-                    cout<<"Please select number of boards:\n[3]: Enter 1\t[4]: Enter 2\t[5]: Enter 3\nNumber of boards: ";
-                else
-                    cout<< "Please select difficulty level\nHigh: Enter 3\tMedium: Enter 2\tEasy: Enter 1\nDifficulty: ";
-                cin >> diff;
-            }
-            difficulty = stoi(diff);
+        cout << endl;
 
-            if(mode=="1")
-                get_player_pos(bot_pos);
-
-            cout << endl;
-
-            for (int i = 0; i < 2 + difficulty; i++) {
-                tables[(char)('A' + i)] = vect;
-            }
+        for (int i = 0; i < 2 + difficulty; i++) {
+            tables[(char)('A' + i)] = vect;
+        }
     }
     game_file.close();
     return;
@@ -223,51 +163,51 @@ void load_game_state(int &counter,string mode,int &difficulty,int &bot_pos)
 
 // function to ask player if they want to quit the game and to save the game
 // it also asks for the board , player counter, mode of the game, difficulty of the game, and if the bot is player 1 or 2
-bool get_save(int counter,string mode,int difficulty,int bot_pos)
+bool get_save(int counter, string mode, int difficulty, int bot_pos)
 {
     string input;
-    cout<<"Would you like to exit the game?\n[yes/no]:";
-    cin>>input;
-    cout<<endl;
-    while(true)
+    cout << "Would you like to exit the game?\n[yes/no]:";
+    cin >> input;
+    cout << endl;
+    while (true)
     {
-        if(input=="yes")
+        if (input == "yes")
         {
 
-            cout<<"Would you like to save the game status?\n[yes/no]:";
-            cin>>input;
-            cout<<endl;
+            cout << "Would you like to save the game status?\n[yes/no]:";
+            cin >> input;
+            cout << endl;
 
-            while(true)
+            while (true)
             {
-                if(input=="yes")
+                if (input == "yes")
                 {
-                    save_game_state(counter,mode,difficulty,bot_pos);
+                    save_game_state(counter, mode, difficulty, bot_pos);
                     exit(0);
                 }
 
-                else if(input=="no")
+                else if (input == "no")
                     exit(0);
 
-                cout<<"Would you like to save the game status?\n[yes/no]:";
-                cin>>input;
-                cout<<endl;
+                cout << "Would you like to save the game status?\n[yes/no]:";
+                cin >> input;
+                cout << endl;
 
             }
         }
-        else if(input=="no")
+        else if (input == "no")
             return false;
 
-        cout<<"Would you like to exit the game?\n[yes/no]:";
-        cin>>input;
-        cout<<endl;
+        cout << "Would you like to exit the game?\n[yes/no]:";
+        cin >> input;
+        cout << endl;
 
     }
 
 }
 
 
-bool validate_Input(string input){
+bool validate_Input(string input) {
 
     if (input.size() != 2)
         return false;
@@ -300,31 +240,31 @@ bool validate_Input(string input){
     return true;
 }
 
-coordinates take_player_input(int player_num,string mode,int difficulty,int bot_pos) {
+coordinates take_player_input(int player_num, string mode, int difficulty, int bot_pos) {
 
     string input;
     cout << "Player " << player_num << ": ";
     cin >> input;
-    cout<<endl;
+    cout << endl;
 
-    while(input=="!")
+    while (input == "!")
     {
-        get_save(player_num,mode,difficulty,bot_pos);
+        get_save(player_num, mode, difficulty, bot_pos);
         cout << "Player " << player_num << ": ";
         cin >> input;
-        cout<<endl;
+        cout << endl;
     }
 
-    while (!validate_Input(input)){
+    while (!validate_Input(input)) {
         cout << "Wrong Input Enter Again" << endl;
         cout << "Player " << player_num << ": ";
         cin >> input;
-        while(input=="!")
+        while (input == "!")
         {
-            get_save(player_num,mode,difficulty,bot_pos);
+            get_save(player_num, mode, difficulty, bot_pos);
             cout << "Player " << player_num << ": ";
             cin >> input;
-            cout<<endl;
+            cout << endl;
         }
     }
 
@@ -337,17 +277,17 @@ coordinates take_player_input(int player_num,string mode,int difficulty,int bot_
 
 
 
-void print_grid(){
+void print_grid() {
     map<char, vector<char>>::iterator itr;
 
-    for(itr = tables.begin(); itr != tables.end(); itr++)
+    for (itr = tables.begin(); itr != tables.end(); itr++)
         cout << left << setw(8) << (*itr).first;
 
 
     cout << endl;
 
-    for(int i = 0; i < 3; i++) {
-        for (itr = tables.begin(); itr != tables.end(); itr++){
+    for (int i = 0; i < 3; i++) {
+        for (itr = tables.begin(); itr != tables.end(); itr++) {
             vector<char> vect_temp = (*itr).second;
             for (int j = 0; j < 3; j++)
                 cout << vect_temp[i * 3 + j] << " ";
@@ -402,27 +342,27 @@ void cross_check() {
 coordinates get_bot_move(int diff)
 {
     coordinates move;
-    if(diff==1)
+    if (diff == 1)
     {
-        return get_random_move();
+        return get_random_move(tables);
     }
-    else if(diff==2)
+    else if (diff == 2)
     {
-        if (rand()%2)
-            return get_random_move();
-        else{
+        if (rand() % 2)
+            return get_random_move(tables);
+        else {
             get_ai_move(move, tables, monoid_values);
             return move;
         }
-            
+
     }
-    else if(diff==3)
+    else if (diff == 3)
     {
         get_ai_move(move, tables, monoid_values);
         return move;
     }
-    
-    return get_random_move();
+
+    return get_random_move(tables);
 
 }
 
@@ -435,8 +375,8 @@ void welcome_text()
 
     string line;
 
-    while(getline(game_file, line))
-        cout<<line<<endl;
+    while (getline(game_file, line))
+        cout << line << endl;
 
     game_file.close();
 
@@ -458,48 +398,48 @@ int main() {
     int bot_pos = 2;
     int player_counter = 0;
 
-    cout<<"Please select a game mode:\nSingleplayer [1]\nMultiplayer  [2]\nmode: ";
-    cin>>mode;
-    cout<<endl;
-    while(true)
+    cout << "Please select a game mode:\nSingleplayer [1]\nMultiplayer  [2]\nmode: ";
+    cin >> mode;
+    cout << endl;
+    while (true)
     {
-        if(mode=="1" || mode=="2")
+        if (mode == "1" || mode == "2")
             break;
-        cout<<"Please select a game mode:\nSingleplayer [1]\nMultiplayer  [2]\nmode: ";
-        cin>>mode;
-        cout<<endl;
+        cout << "Please select a game mode:\nSingleplayer [1]\nMultiplayer  [2]\nmode: ";
+        cin >> mode;
+        cout << endl;
     }
 
-    cout<<"Please select an option:\nNew Game  [1]\nLoad Game [2]\noption: ";
-    cin>>input;
-    cout<<endl;
-    while(true)
+    cout << "Please select an option:\nNew Game  [1]\nLoad Game [2]\noption: ";
+    cin >> input;
+    cout << endl;
+    while (true)
     {
-        if(input=="1")
+        if (input == "1")
         {
-            vector<char> vect = {'0', '1', '2', '3', '4', '5', '6', '7', '8'};
-            if(mode=="2")
+            vector<char> vect = { '0', '1', '2', '3', '4', '5', '6', '7', '8' };
+            if (mode == "2")
                 cout << "Please select number of boards:\n[3]: Enter 1\t[4]: Enter 2\t[5]: Enter 3\nNumber of boards: ";
             else
                 cout << "Please select difficulty level\nHigh: Enter 3\tMedium: Enter 2\tEasy: Enter 1\nDifficulty: ";
             cin >> diff;
-            cout<<endl;
+            cout << endl;
 
             // validate difficulty
-            while(true)
+            while (true)
             {
-                if(diff=="1" || diff=="2" || diff=="3")
+                if (diff == "1" || diff == "2" || diff == "3")
                     break;
-                if(mode=="2")
-                    cout<<"Please select number of boards:\n[3]: Enter 1\t[4]: Enter 2\t[5]: Enter 3\nNumber of boards: ";
+                if (mode == "2")
+                    cout << "Please select number of boards:\n[3]: Enter 1\t[4]: Enter 2\t[5]: Enter 3\nNumber of boards: ";
                 else
-                    cout<< "Please select difficulty level\nHigh: Enter 3\tMedium: Enter 2\tEasy: Enter 1\nDifficulty: ";
+                    cout << "Please select difficulty level\nHigh: Enter 3\tMedium: Enter 2\tEasy: Enter 1\nDifficulty: ";
                 cin >> diff;
-                cout<<endl;
+                cout << endl;
             }
             difficulty = stoi(diff);
 
-            if(mode=="1")
+            if (mode == "1")
                 get_player_pos(bot_pos);
 
             cout << endl;
@@ -507,16 +447,16 @@ int main() {
             for (int i = 0; i < 2 + difficulty; i++) {
                 tables[(char)('A' + i)] = vect;
             }
-                break;
+            break;
         }
-        else if (input=="2")
+        else if (input == "2")
         {
-            load_game_state(player_counter, mode,difficulty,bot_pos);
+            load_game_state(player_counter, mode, difficulty, bot_pos);
             break;
         }
         cout << "Please select an option:\nNew Game  [1]\nLoad Game [2]\noption: ";
         cin >> input;
-        cout<<endl;
+        cout << endl;
     }
 
 
@@ -528,16 +468,17 @@ int main() {
 
         input1 = get_bot_move(difficulty);
 
-        cout << "Player " <<bot_pos<< "(AI): " << input1.grid_name << input1.position << endl;
+        cout << "Player " << bot_pos << "(AI): " << input1.grid_name << input1.position << endl;
 
-    }else{
+    }
+    else {
 
-        input1 = take_player_input(player_counter % 2 + 1,mode,difficulty,bot_pos);
+        input1 = take_player_input(player_counter % 2 + 1, mode, difficulty, bot_pos);
 
     }
 
 
-    while(true) {
+    while (true) {
         player_counter++;
         refresh_grid(input1);
 
@@ -555,10 +496,11 @@ int main() {
 
             input1 = get_bot_move(difficulty);
 
-            cout << "Player "<< bot_pos <<"(AI): " << input1.grid_name << input1.position << endl;
+            cout << "Player " << bot_pos << "(AI): " << input1.grid_name << input1.position << endl;
 
-        }else {
-            input1 = take_player_input(player_counter % 2 + 1,mode,difficulty,bot_pos);
+        }
+        else {
+            input1 = take_player_input(player_counter % 2 + 1, mode, difficulty, bot_pos);
         }
 
     }
