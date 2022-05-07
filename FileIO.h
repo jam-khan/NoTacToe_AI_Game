@@ -16,6 +16,6 @@ using namespace std;
 #define FileIO
 
 void save_game_state(int counter, string mode, int difficulty, int bot_pos, map<char, vector<char>> tables);
-void load_game_state(int& counter, string mode, int& difficulty, int& bot_pos, map<char, vector<char>> tables);
+void load_game_state(int& counter, string mode, int& difficulty, int& bot_pos, map<char, vector<char>>& tables);
 
 #endif
