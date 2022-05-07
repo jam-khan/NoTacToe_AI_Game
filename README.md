@@ -53,6 +53,9 @@ Repository for ENGG1340 team project.
 
 
 ## Sample Input/Output Display:
+A more accurate sample can be found in the sample input/output folder
+
+
 <pre>
 A      B      C  
 X 1 X  0 X 2  0 X 2  
