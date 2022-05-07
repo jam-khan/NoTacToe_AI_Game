@@ -267,14 +267,11 @@ void get_ai_move(coordinates &move, map<char, vector<char>> tables, map<string, 
             }
         }
     }
-    // move = get_random_move();
     return;
-    // return get_random_move();
-
 }
+
 coordinates get_random_move(map<char, vector<char>> tables)
 {
-    //cout<<"randomizing\n";
     srand(time(0));
     map<char, vector<char>>::iterator itr;
     char board;
