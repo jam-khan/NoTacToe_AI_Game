@@ -83,3 +83,11 @@ Player 1 wins game
 
 </pre>
 <br />
+
+
+## Instructions for Compilation
+<pre>
+A makefile has been included 
+Please type "make Notakto" to compile the game.
+</pre>
+<br />
