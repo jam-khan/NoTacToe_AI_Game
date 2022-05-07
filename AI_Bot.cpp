@@ -272,3 +272,58 @@ void get_ai_move(coordinates &move, map<char, vector<char>> tables, map<string, 
     // return get_random_move();
 
 }
+coordinates get_random_move(map<char, vector<char>> tables)
+{
+    //cout<<"randomizing\n";
+    srand(time(0));
+    map<char, vector<char>>::iterator itr;
+    char board;
+    int pos;
+    int map_size = tables.size();
+    int rand_board;
+    int rand_pos;
+
+    //randomize board
+
+    rand_board = rand() % map_size;
+    rand_pos = rand() % 9;
+
+    while (true)
+    {
+        int board_count = -1;
+        for (itr = tables.begin();itr != tables.end();itr++)
+        {
+            board_count++;
+            if (board_count == rand_board)
+            {
+
+                board = itr->first;
+
+                vector<char> vect_temp = itr->second;
+                vector<char>::iterator itr2;
+
+                int board_pos = 0;
+                for (itr2 = vect_temp.begin();itr2 != vect_temp.end();itr2++)
+                {
+                    if (board_pos == rand_pos)
+                    {
+                        if (*itr2 == 'X')
+                        {
+                            rand_pos = rand() % 9;
+                        }
+                        else
+                        {
+                            coordinates coordinate;
+                            coordinate.grid_name = board;
+                            coordinate.position = rand_pos;
+                            return coordinate;
+                        }
+
+                    }
+                    board_pos++;
+
+                }
+            }
+        }
+    }
+}
