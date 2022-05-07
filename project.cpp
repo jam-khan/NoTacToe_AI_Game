@@ -50,6 +50,7 @@ int get_player_pos(int &bot)
 // this function returns a random move for the bot
 coordinates get_random_move()
 {
+    //cout<<"randomizing\n";
     srand(time(0));
     map<char, vector<char>>::iterator itr;
     char board;
@@ -57,48 +58,50 @@ coordinates get_random_move()
     int map_size=tables.size();
     int rand_board;
     int rand_pos;
-    int board_count=-1;
 
     //randomize board
 
-    rand_board = rand()%map_size;
-    rand_pos = rand()%9;
+    rand_board=rand()%map_size;
+    rand_pos=rand()%9;
 
-    for(itr=tables.begin();itr!=tables.end();itr++)
+    while(true)
     {
-        board_count++;
-        if(board_count==rand_board)
+        int board_count=-1;
+        for(itr=tables.begin();itr!=tables.end();itr++)
         {
-
-            board=itr->first;
-
-            vector<char> vect_temp = itr->second;
-            vector<char>::iterator itr2;
-
-            int board_count=0;
-            for(itr2=vect_temp.begin();itr2!=vect_temp.end();itr2++)
+            board_count++;
+            if(board_count==rand_board)
             {
-                if (board_count==rand_pos)
+
+                board=itr->first;
+
+                vector<char> vect_temp = itr->second;
+                vector<char>::iterator itr2;
+
+                int board_pos=0;
+                for(itr2=vect_temp.begin();itr2!=vect_temp.end();itr2++)
                 {
-                    if (*itr2=='x')
+                    if (board_pos==rand_pos)
                     {
-                        rand_pos= rand() % 9;
+                        if (*itr2=='x')
+                        {
+                            rand_pos=rand()%9;
+                        }
+                        else
+                        {
+                            coordinates coordinate;
+                            coordinate.grid_name = board;
+                            coordinate.position = rand_pos;
+                            return coordinate;
+                        }
+
                     }
-                    else
-                    {
-                        coordinates coordinate;
-                        coordinate.grid_name = board;
-                        coordinate.position = rand_pos;
-                        return coordinate;
-                    }
+                    board_pos++;
 
                 }
-                board_count++;
-
             }
         }
     }
-
 }
 
 
