@@ -1,6 +1,6 @@
 FLAGS = -pedantic-errors -std=c++11
 
-Main.o: Main.cpp AI_Bot.h FileIO.h Grid_Functions.h
+main.o: main.cpp AI_Bot.h FileIO.h Grid_Functions.h
 
   g++ $(FLAGS) -c $<
 
@@ -13,7 +13,7 @@ FileIO.o: FileIO.cpp FileIO.h
 Grid_Functions.o: Grid_Functions.cpp Grid_Functions.h FileIO.h AI_Bot.h Struct_Guard.h
   g++ $(FLAGS) -c $<
 
-Notakto:Main.o AI_Bot.o FileIO.o Grid_Functions.o
+Notakto:main.o AI_Bot.o FileIO.o Grid_Functions.o
   g++ $(FLAGS) $^ -o $@
   
 clean:
