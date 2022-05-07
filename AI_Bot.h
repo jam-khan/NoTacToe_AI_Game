@@ -1,3 +1,4 @@
+#pragma once
 #include <iostream>
 #include <string>
 #include <map>
@@ -11,10 +12,7 @@
 
 using namespace std;
 
-struct coordinates {
-    char grid_name;
-    int position;
-};
+#include "Struct_Guard.h"
 
 #ifndef AI_BOT_H
 #define AI_BOT_H
