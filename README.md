@@ -39,10 +39,10 @@ Repository for ENGG1340 team project.
   Difficulty level - Extremely Hard: All moves will be done using algorithm. It will be impossible for Player to win the game if choses to go second.  
   <br />
 ### Requirement 2: Data structures for storing game status
-  We will be using **Multi-dimensional Arrays** for storing the grid status of the game.  
+  We will be using vectors and maps for storing the grid status of the game.  
 
 ### Requirement 3: Dynamic memory management
-  The variable storing the move will be storing a different input each round. The previous move will be cleared.
+  Once a grid (stored in vector) is no longer in play, it is removed.
   
 ### Requirement 4: File input/output (e.g., for loading/saving game status)
   We will provide the option to save the game status which will output a file.
@@ -89,5 +89,4 @@ Player 1 wins game
 <pre>
 A makefile has been included 
 Please type "make Notakto" to compile the game.
-</pre>
 <br />
