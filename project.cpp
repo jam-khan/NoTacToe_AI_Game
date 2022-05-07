@@ -410,7 +410,7 @@ int main() {
     }
     // was checking refresh grid
 
-    cout << "Player " << (player_counter % 2 + 1) << " wins!";
+    cout << "Player " << (player_counter % 2 + 1) << " wins!\n";
     end_text();
 }
 
