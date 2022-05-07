@@ -83,7 +83,7 @@ coordinates get_random_move()
                 {
                     if (board_pos==rand_pos)
                     {
-                        if (*itr2=='x')
+                        if (*itr2=='X')
                         {
                             rand_pos=rand()%9;
                         }
