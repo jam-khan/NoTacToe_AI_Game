@@ -10,6 +10,9 @@ Repository for ENGG1340 team project.
 ## Game: 
   Notakto
 
+## Video-Demo: 
+https://drive.google.com/file/d/1CyhCDfdeja_Kc9DivmT2pcqsZzxMh3Gq/view?usp=sharing
+
 ## Game Description:
     This is a variant of tiktakto. It is more complex and fun. In this game,  
     there is no possible draw situation unlike tiktakto.  
@@ -39,7 +42,11 @@ Command-line commands to run project:
     g++ -pedantic-errors -std=c++11 main.cpp AI_Bot.cpp Grid_Functions.cpp FileIO.cpp -o Notakto  
     ./Notakto  
 </pre>
+
 A Makefile has been added to the project. It can be used with the following command to compile the project.
+<pre>
+make Notakto
+</pre>
 
 <br>
 
