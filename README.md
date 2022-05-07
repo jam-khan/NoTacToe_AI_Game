@@ -35,12 +35,12 @@ Repository for ENGG1340 team project.
 ## Installation and Running the Game:
 
 Command-line commands to run project: 
->> g++ -pedantic-errors -std=c++11 main.cpp AI_Bot.cpp Grid_Functions.cpp FileIO.cpp -o Notakto
->> ./Notakto
+g++ -pedantic-errors -std=c++11 main.cpp AI_Bot.cpp Grid_Functions.cpp FileIO.cpp -o Notakto
+./Notakto
 
 A Makefile has been added to the project. It can be used with the following command to compile the project.
 
-
+<br>
 
 ## Implementation of Requirements:
 ### Requirement 1: Generation of random game sets or events
