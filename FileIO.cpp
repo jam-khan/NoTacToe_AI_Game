@@ -117,18 +117,19 @@ void load_game_state(int& counter, string mode, int& difficulty, int& bot_pos, m
         difficulty = stoi(diff);
 
         if (mode == "1")
+        {
             string input;
             cout << "Would you like to go first?\n[yes/no]: ";
             cin >> input;
             while (true)
             {
-                if (input == 'no')
+                if (input == "yes")
                 {
                     bot_pos = 2;
                     counter = 0;
                     break;
                 }
-                else if (input == 'no')
+                else if (input == "no")
                 {
                     bot_pos = 1;
                     counter = 1;
@@ -137,6 +138,7 @@ void load_game_state(int& counter, string mode, int& difficulty, int& bot_pos, m
                 cout << "Would you like to go first?\n[yes/no]: ";
                 cin >> input;
             }
+        }
 
             
         cout << endl;
