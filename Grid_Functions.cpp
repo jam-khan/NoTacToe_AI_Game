@@ -16,8 +16,16 @@ using namespace std;
 #include "FileIO.h"
 #include "AI_Bot.h"
 
+
+// this file consists of all the functions needed for core functionality of the game: Notakto
+
 int get_player_pos(int& bot)
 {
+
+    // this function is used to ask the about their choce whether to go first or second
+
+    // if they go first then setup is changed accordingly for example user is assigned player 1
+
     string input;
     cout << "Would you like to go first?\n[yes/no]: ";
     cin >> input;

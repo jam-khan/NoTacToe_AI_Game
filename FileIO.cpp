@@ -98,7 +98,7 @@ void load_game_state(int& counter, string mode, int& difficulty, int& bot_pos, m
         if (mode == "2")
             cout << "Please select number of boards:\n[3]: Enter 1\t[4]: Enter 2\t[5]: Enter 3\nNumber of boards: ";
         else
-            cout << "Please select difficulty level\nHigh: Enter 3\tMedium: Enter 2\tEasy: Enter 1\nDifficulty: ";
+            cout << "Please select difficulty level\n[Easy]: Enter 1    [Medium]: Enter 2    [Difficult]: Enter 3\n\nDifficulty: ";
         cin >> diff;
         cout << "\n";
         // validate difficulty
@@ -111,7 +111,7 @@ void load_game_state(int& counter, string mode, int& difficulty, int& bot_pos, m
             if (mode == "2")
                 cout << "Please select number of boards:\n[3]: Enter 1\t[4]: Enter 2\t[5]: Enter 3\nNumber of boards: ";
             else
-                cout << "Please select difficulty level\nHigh: Enter 3\tMedium: Enter 2\tEasy: Enter 1\nDifficulty: ";
+                cout << "Please select difficulty level\n[Easy]: Enter 1    [Medium]: Enter 2    [Difficult]: Enter 3\n\nDifficulty: ";
             cin >> diff;
         }
         difficulty = stoi(diff);

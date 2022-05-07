@@ -1,0 +1,109 @@
+             _        _    _        
+            | |      | |  | |
+ _ __   ___ | |_ __ _| | _| |_ ___
+| '_ \ / _ \| __/ _` | |/ / __/ _ \
+| | | | (_) | || (_| |   <| || (_) |
+|_| |_|\___/ \__\__,_|_|\_\\__\___/
+
+===============================================
+Please select a game mode:
+Singleplayer [1]
+Multiplayer  [2]
+mode: 1
+
+Please select an option:
+New Game  [1]
+Load Game [2]
+option: 2
+
+... Loading File ...
+No Previous Saves
+
+Starting New Game ...
+
+Please select difficulty level
+[Easy]: Enter 1    [Medium]: Enter 2    [Difficult]: Enter 3
+
+Difficulty: 1
+
+Would you like to go first?
+[yes/no]: yes
+
+Enter '!' whenever you want to quit the game.
+
+A       B       C
+0 1 2   0 1 2   0 1 2
+3 4 5   3 4 5   3 4 5   
+6 7 8   6 7 8   6 7 8
+Player 1: A0
+
+
+A       B       C
+X 1 2   0 1 2   0 1 2
+3 4 5   3 4 5   3 4 5   
+6 7 8   6 7 8   6 7 8
+Player 2(AI): A8
+
+A       B       C       
+X 1 2   0 1 2   0 1 2
+3 4 5   3 4 5   3 4 5
+6 7 X   6 7 8   6 7 8   
+Player 1: A1
+
+
+A       B       C
+X X 2   0 1 2   0 1 2   
+3 4 5   3 4 5   3 4 5
+6 7 X   6 7 8   6 7 8
+Player 2(AI): C1
+
+A       B       C       
+X X 2   0 1 2   0 X 2
+3 4 5   3 4 5   3 4 5
+6 7 X   6 7 8   6 7 8
+Player 1: C2
+
+
+A       B       C
+X X 2   0 1 2   0 X X
+3 4 5   3 4 5   3 4 5
+6 7 X   6 7 8   6 7 8   
+Player 2(AI): A3
+
+A       B       C
+X X 2   0 1 2   0 X X
+X 4 5   3 4 5   3 4 5
+6 7 X   6 7 8   6 7 8   
+Player 1: C0
+
+
+A       B
+X X 2   0 1 2
+X 4 5   3 4 5
+6 7 X   6 7 8   
+Player 2(AI): B8
+
+A       B
+X X 2   0 1 2
+X 4 5   3 4 5
+6 7 X   6 7 X   
+Player 1: B0
+
+
+A       B
+X X 2   X 1 2
+X 4 5   3 4 5   
+6 7 X   6 7 X
+Player 2(AI): B5
+
+A       B
+X X 2   X 1 2   
+X 4 5   3 4 X
+6 7 X   6 7 X
+Player 1: !
+
+Would you like to exit the game?
+[yes/no]:yes
+
+Would you like to save the game status?
+[yes/no]:yes

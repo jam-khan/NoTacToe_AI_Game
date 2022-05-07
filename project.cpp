@@ -37,6 +37,8 @@ int main() {
 
     get_values(difficulty, diff, input, mode, bot_pos, player_counter, tables);
 
+    cout << "Enter '!' whenever you want to quit the game.\n" << endl;
+
     print_grid(tables);
 
     coordinates input1;
@@ -51,10 +53,11 @@ int main() {
 
 
     while (true) {
+       
         player_counter++;
         refresh_grid(input1, tables);
 
-        // get_ai_move();
+        
         cout << endl;
 
         cross_check(tables);

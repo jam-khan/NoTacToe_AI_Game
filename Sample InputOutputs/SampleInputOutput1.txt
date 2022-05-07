@@ -1,0 +1,157 @@
+             _        _    _        
+            | |      | |  | |
+ _ __   ___ | |_ __ _| | _| |_ ___
+| '_ \ / _ \| __/ _` | |/ / __/ _ \
+| | | | (_) | || (_| |   <| || (_) |
+|_| |_|\___/ \__\__,_|_|\_\\__\___/
+
+===============================================
+Please select a game mode:
+Singleplayer [1]
+Multiplayer  [2]
+mode: 1
+
+Please select an option:
+New Game  [1]
+Load Game [2]
+option: 1
+
+Please select difficulty level
+[Easy]: Enter 1    [Medium]: Enter 2    [Difficult]: Enter 3
+
+Difficulty: 3
+
+Would you like to go first?
+[yes/no]: yes
+
+Enter '!' whenever you want to quit the game.
+
+A       B       C       D       E
+0 1 2   0 1 2   0 1 2   0 1 2   0 1 2   
+3 4 5   3 4 5   3 4 5   3 4 5   3 4 5
+6 7 8   6 7 8   6 7 8   6 7 8   6 7 8
+Player 1: A0
+
+
+A       B       C       D       E
+X 1 2   0 1 2   0 1 2   0 1 2   0 1 2   
+3 4 5   3 4 5   3 4 5   3 4 5   3 4 5
+6 7 8   6 7 8   6 7 8   6 7 8   6 7 8   
+Player 2(AI): A3
+
+A       B       C       D       E
+X 1 2   0 1 2   0 1 2   0 1 2   0 1 2
+X 4 5   3 4 5   3 4 5   3 4 5   3 4 5
+6 7 8   6 7 8   6 7 8   6 7 8   6 7 8
+Player 1: B0
+
+
+A       B       C       D       E
+X 1 2   X 1 2   0 1 2   0 1 2   0 1 2
+X 4 5   3 4 5   3 4 5   3 4 5   3 4 5   
+6 7 8   6 7 8   6 7 8   6 7 8   6 7 8
+Player 2(AI): B8
+
+A       B       C       D       E
+X 1 2   X 1 2   0 1 2   0 1 2   0 1 2
+X 4 5   3 4 5   3 4 5   3 4 5   3 4 5
+6 7 8   6 7 X   6 7 8   6 7 8   6 7 8
+Player 1: B1
+
+
+A       B       C       D       E
+X 1 2   X X 2   0 1 2   0 1 2   0 1 2   
+X 4 5   3 4 5   3 4 5   3 4 5   3 4 5
+6 7 8   6 7 X   6 7 8   6 7 8   6 7 8   
+Player 2(AI): B3
+
+A       B       C       D       E
+X 1 2   X X 2   0 1 2   0 1 2   0 1 2
+X 4 5   X 4 5   3 4 5   3 4 5   3 4 5
+6 7 8   6 7 X   6 7 8   6 7 8   6 7 8   
+Player 1: B2
+
+
+A       C       D       E
+X 1 2   0 1 2   0 1 2   0 1 2
+X 4 5   3 4 5   3 4 5   3 4 5   
+6 7 8   6 7 8   6 7 8   6 7 8
+Player 2(AI): C0
+
+A       C       D       E
+X 1 2   X 1 2   0 1 2   0 1 2
+X 4 5   3 4 5   3 4 5   3 4 5
+6 7 8   6 7 8   6 7 8   6 7 8
+Player 1: C1
+
+
+A       C       D       E
+X 1 2   X X 2   0 1 2   0 1 2   
+X 4 5   3 4 5   3 4 5   3 4 5
+6 7 8   6 7 8   6 7 8   6 7 8
+Player 2(AI): C2
+
+A       D       E
+X 1 2   0 1 2   0 1 2
+X 4 5   3 4 5   3 4 5
+6 7 8   6 7 8   6 7 8   
+Player 1: A6
+
+
+D       E
+0 1 2   0 1 2
+3 4 5   3 4 5   
+6 7 8   6 7 8
+Player 2(AI): D0
+
+D       E
+X 1 2   0 1 2
+3 4 5   3 4 5
+6 7 8   6 7 8
+Player 1: D1
+
+
+D       E
+X X 2   0 1 2
+3 4 5   3 4 5   
+6 7 8   6 7 8
+Player 2(AI): D3
+
+D       E       
+X X 2   0 1 2
+X 4 5   3 4 5
+6 7 8   6 7 8
+Player 1: D2
+
+
+E
+0 1 2
+3 4 5
+6 7 8
+Player 2(AI): E4
+
+E
+0 1 2
+3 X 5
+6 7 8   
+Player 1: E0
+
+
+E
+X 1 2
+3 X 5
+6 7 8   
+Player 2(AI): E2
+
+E
+X 1 X
+3 X 5
+6 7 8
+Player 1: E1
+
+
+Player 2 wins!
+  _____                 ____
+ / ___/__ ___ _  ___   / __ \_  _____ ____
+/ (_ / _ `/  ' \/ -_) / /_/ / |/ / -_) __/
+\___/\_,_/_/_/_/\__/  \____/|___/\__/_/

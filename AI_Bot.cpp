@@ -13,17 +13,23 @@
 
 using namespace std;
 
-
-// struct coordinates {
-//     char grid_name;
-//     int position;
-// };
-
+// this file holds the Artificially intelligent Bot and Random Bot
 
 void initialize_ai_bot(map<string, vector<vector<char>>> &monoid_values) {
 
+    // what it does?
+    // this function loads the values into the map monoid_values. These values are a set of possible arrangements of the Notakto grids
+    // monoid values will allow the Artificial Intelligent Bot to find the most efficient move
+
+    // monoid from what I know is some mathematical word used for sets.
+    // we have implemented this algorithm using following research paper
+    // https://arxiv.org/pdf/1301.1672.pdf
+
+    // What the inputs are?
+    // input is simply the map monoid_values passed by reference so that changes are reflected in the main program as well
+
     ifstream fin;
-    fin.open("q_values.txt");
+    fin.open("q_values.txt"); // this file stores the monoid values 
 
     if (fin.fail()) {
         cout << "Error!"<<endl;
@@ -41,7 +47,10 @@ void initialize_ai_bot(map<string, vector<vector<char>>> &monoid_values) {
             monoid_values[q_value].push_back({});
             for (int j = 0; j < 9; j++) {
                 fin >> temp_chr;
-                monoid_values[q_value][i].push_back(temp_chr);
+                monoid_values[q_value][i].push_back(temp_chr); // all the values are loaded to the monoid_values map
+                // we have used a map since it will allow storage of values as a dictionary
+                // each monoid values had a corresponding value such as 'c^2' or 'ad'
+                // these values are then used by algorithm to make the best move
             }
         }
     }
@@ -52,6 +61,10 @@ void initialize_ai_bot(map<string, vector<vector<char>>> &monoid_values) {
 
 
 vector<char> get_sorted(vector<char> grid) {
+
+    // this function will return the sorted vector grid
+    // this is used to sort an possible arrangment of grid after going through reflection of rotation
+    // this changes vector from e.g. {'8', '6', 'X', '7', '3', 'X', '1', '0', '4'} to {'0', '1', 'X', '3', '4', 'X', '6', '7', '8'}
 
     vector<char> sorted_grid;
 
@@ -72,21 +85,31 @@ vector<char> get_sorted(vector<char> grid) {
 
 vector<char> get_rotation(vector<char> grid, int degrees) {
 
+    // this function rotates the given grid arrangement inside grid by 90 degrees
+    // and then, return the new rotated arrangement
+    // this is for the purpose of comparison used by the algorithm to get the best possible move
+
+    // this function also uses recursion if e.g. degrees parameter is 180, 270, or 360.
+
     vector<char> rotated_grid;
 
     rotated_grid = {grid[6], grid[3], grid[0], grid[7], grid[4], grid[1], grid[8], grid[5], grid[2]};
+
+
     rotated_grid = get_sorted(rotated_grid);
 
 
     if (degrees == 90)
         return rotated_grid;
     else
-        return get_rotation(rotated_grid, degrees - 90);
+        return get_rotation(rotated_grid, degrees - 90); // here we can see how it uses recursion. it first rotate 90 degrees and then, calls again for further rotation
 
 }
 
 vector<char> get_reflection(vector<char> grid, char axis) {
 
+    // this function is used to reflect the arrangment inside grid about x-axis or y-axis
+    // return the new reflected arrangement
 
     vector<char> reflected_grid;
 
@@ -103,6 +126,13 @@ vector<char> get_reflection(vector<char> grid, char axis) {
 
 
 string get_q_value(vector<char> current_table, map<string, vector<vector<char>>> monoid_values) {
+
+    // this function return the special value associated with the grid arrangement
+    // it runs through the map monoid values and compares the current grid arrangement with each arrangment in map monoid_values
+    // once it has found the match then it returns the key associated with that vector inside vector in map
+    // key can be 'a', 'ad', 'b' etc
+    // this is in accordance to the research paper
+    //https://arxiv.org/pdf/1301.1672.pdf
 
     map<string, vector<vector<char>>>::iterator itr;
     vector<char> temp_grid;
@@ -124,12 +154,18 @@ string get_q_value(vector<char> current_table, map<string, vector<vector<char>>>
         }
     }
 
-    return "";
+    return ""; // there are going to be grid arrangments which have no associated value
+    // for those grids we simply return nothing or you can say empty string
 
 }
 
 
 string simplify_monoid(string monoid) {
+
+    // this function takes in the monoid string which can look something like following "aaacccadad"
+    // then, this string is simplified to something like "acc" and returned
+    // this simplification happens on the basis of method given in the below paper
+    // https://arxiv.org/pdf/1301.1672.pdf
 
 
     bool no_change = true;
@@ -195,8 +231,9 @@ string simplify_monoid(string monoid) {
         for (int i = 0; i < count_d; i++)
             simplified_monoid = simplified_monoid + "d";
 
-        // simplified_monoid = string('a', count_a) + string('b', count_b) + string('c', count_c) + string('d', count_d);
-        return simplify_monoid(simplified_monoid);
+        
+        return simplify_monoid(simplified_monoid); // it uses recursion to simplify the monoid as much as possible.
+        // the recursion ends when there are no changes made to the monoid string passed to the function
 
     }
 
@@ -204,6 +241,13 @@ string simplify_monoid(string monoid) {
 
 
 string get_monoid(map<char, vector<char>> test_tables,  map<string, vector<vector<char>>> monoid_values) {
+
+    // since our game has multiple grids during the game and those all are dynamically arranged
+    // therefore, the combined monoid value associated with the current grids changes after every move
+    // this function is used to iterate through each grid and then, find the monoid value of each grid and 
+    // combine those monoid values and concatenate them into a string called monoid 
+
+    // this string is then returned
 
     string monoid = "";
 
@@ -213,12 +257,21 @@ string get_monoid(map<char, vector<char>> test_tables,  map<string, vector<vecto
         monoid += get_q_value((*itr).second, monoid_values);
 
 
-    return simplify_monoid(monoid);
+    return simplify_monoid(monoid); // once all monoid values are combined into monoid then it is passed to function called simplify_monoid
+                                    // then, output of simplify_monoid will be returned
 }
 
 bool check_ai_move(map<char, vector<char>> test_tables, map<string, vector<vector<char>>> monoid_values) {
 
+    // this function takes in the grids of the game stored inside test_tables along with monoid values initialized
+    // then, these values are passed to get_monoid function to get a simplified monoid value e.g. "bc"
+    // this function will tell whether the recent move made is the best possible move or not
+    // it will return true if move is best 
+    // it will return false if move is not best
+
     string monoid = get_monoid(test_tables, monoid_values);
+
+    // below is the comparison. if simplified monoid value is one of the following: "a", "bc", "cb", "bb", "cc" then the move is best
 
     if (monoid == "a"
             || monoid == "bc"
@@ -236,6 +289,10 @@ void get_ai_move(coordinates &move, map<char, vector<char>> tables, map<string, 
 
     map<char, vector<char>>::iterator itr;
 
+    // this function takes in the struct coordinates move variable to store the best move or any move
+    
+    // it iterates through all of grids and makes changes and uses new moves once it has found the best move it is stored inside move variable
+    // function is returned (stopped)
     for (itr = tables.begin(); itr != tables.end(); itr++) {
         map<char, vector<char>> test_tables = tables;
         for (int i = 0; i < 9; i++) {
@@ -257,18 +314,27 @@ void get_ai_move(coordinates &move, map<char, vector<char>> tables, map<string, 
         }
     }
 
+    // there can be scenario where there are no best possible moves remaining
+    // for that situation below iteration allows for move to take place on the first empty cell so if A3 if first empty cell in grids
+    // then, it is returned
+
     for (itr = tables.begin(); itr != tables.end(); itr++) {
         for (int i = 0; i < 9; i++) {
             if (tables[(*itr).first][i] != 'X'){
                 move.grid_name = (*itr).first;
                 move.position = i;
-                // return move;
                 return;
             }
         }
     }
     return;
 }
+
+
+// above code is written by Jam Kabeer Ali Khan (UID: 3035918749)
+
+// below code is written by Yuanto
+
 
 coordinates get_random_move(map<char, vector<char>> tables)
 {
