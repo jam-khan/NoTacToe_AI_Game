@@ -270,6 +270,22 @@ void welcome_text()
 
 }
 
+//print end text
+void end_text()
+{
+    ifstream game_file;
+
+    game_file.open("GameOver.txt");
+
+    string line;
+
+    while (getline(game_file, line))
+        cout << line << endl;
+
+    game_file.close();
+
+}
+
 
 int main() {
 
@@ -395,7 +411,7 @@ int main() {
     // was checking refresh grid
 
     cout << "Player " << (player_counter % 2 + 1) << " wins!";
-
+    end_text();
 }
 
 // input: done
