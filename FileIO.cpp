@@ -50,7 +50,7 @@ void save_game_state(int counter, string mode, int difficulty, int bot_pos, map<
 
 // this function loads the game state from a text file
 // this includes the board , player counter, mode of the game, difficulty of the game, and if the bot is player 1 or 2
-void load_game_state(int& counter, string mode, int& difficulty, int& bot_pos, map<char, vector<char>> tables)
+void load_game_state(int& counter, string mode, int& difficulty, int& bot_pos, map<char, vector<char>>& tables)
 {
     ifstream game_file;
 
