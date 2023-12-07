@@ -14,6 +14,8 @@ Repository for ENGG1340 team project.
 https://drive.google.com/file/d/1CyhCDfdeja_Kc9DivmT2pcqsZzxMh3Gq/view?usp=sharing
 
 ## Game Description:
+    This imlements the following research paper: https://arxiv.org/pdf/1301.1672.pdf
+    
     This is a variant of tiktakto. It is more complex and fun. In this game,  
     there is no possible draw situation unlike tiktakto.  
     Here is a link to android app for this game: https://play.google.com/store/apps/details?id=com.counterwave.notakto&hl=en&gl=US  
