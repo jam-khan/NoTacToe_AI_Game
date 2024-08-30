@@ -1,6 +1,4 @@
-# engg1340-project
-Repository for ENGG1340 team project.
-
+# AI-Agent for Notakto
 
 ## Team Members:
   Jam Kabeer Ali Khan  
